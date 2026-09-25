@@ -1,0 +1,5 @@
+# Skills, agents, hooks, and MCP
+
+::: {.callout-note}
+To be written.
+:::

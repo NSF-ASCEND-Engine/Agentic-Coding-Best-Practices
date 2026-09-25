@@ -1,0 +1,9 @@
+# Preface {.unnumbered}
+
+Best practices for software development with coding agents (Claude Code, OpenAI Codex, and
+similar tools), drawn from two years of daily use.
+
+::: {.callout-note}
+## Work in progress
+Content has not been written yet.
+:::

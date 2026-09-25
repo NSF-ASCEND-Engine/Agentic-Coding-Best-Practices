@@ -1,0 +1,14 @@
+/*-- scss:defaults --*/
+$primary: #1f5f8b;
+$link-color: #2a7ab8;
+$body-font-size: 1.02rem;
+$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+/*-- scss:rules --*/
+.callout { margin-top: 1rem; margin-bottom: 1rem; }
+
+div.callout-important { border-left-color: #b8352e; }
+div.callout-warning   { border-left-color: #d98c00; }
+
+table { font-size: 0.95rem; }
+th { background: rgba(31, 95, 139, 0.07); }
