@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic Coding Best Practices",
+    "section": "",
+    "text": "Preface\nBest practices for software development with coding agents (Claude Code, OpenAI Codex, and similar tools), drawn from two years of daily use.\n\n\n\n\n\n\nWork in progress\n\n\n\nContent has not been written yet.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "chapters/01-tools.html",
+    "href": "chapters/01-tools.html",
+    "title": "1  The tools",
+    "section": "",
+    "text": "To be written.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>The tools</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-context.html",
+    "href": "chapters/02-context.html",
+    "title": "2  Context and instructions",
+    "section": "",
+    "text": "To be written.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Context and instructions</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-workflows.html",
+    "href": "chapters/03-workflows.html",
+    "title": "3  Workflows",
+    "section": "",
+    "text": "To be written.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html",
+    "href": "chapters/04-extending.html",
+    "title": "4  Skills, agents, hooks, and MCP",
+    "section": "",
+    "text": "To be written.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Skills, agents, hooks, and MCP</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-failure-modes.html",
+    "href": "chapters/05-failure-modes.html",
+    "title": "5  Failure modes",
+    "section": "",
+    "text": "To be written.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-reference.html",
+    "href": "chapters/06-reference.html",
+    "title": "6  Reference",
+    "section": "",
+    "text": "To be written.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Reference</span>"
+    ]
+  }
+]
