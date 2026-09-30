@@ -3,7 +3,7 @@
 A [Quarto](https://quarto.org) book on developing software with coding agents (Claude Code,
 OpenAI Codex, and similar tools).
 
-**Published site:** https://joshday.github.io/Agentic-Coding-Best-Practices/
+**Published site:** https://nsf-ascend-engine.github.io/Agentic-Coding-Best-Practices/
 
 ## Building locally
 

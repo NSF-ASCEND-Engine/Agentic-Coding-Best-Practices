@@ -8,7 +8,7 @@ book:
   author: "Josh Day"
   date: last-modified
   search: true
-  repo-url: https://github.com/joshday/Agentic-Coding-Best-Practices
+  repo-url: https://github.com/NSF-ASCEND-Engine/Agentic-Coding-Best-Practices
   repo-actions: [edit, issue]
   sidebar:
     style: docked
