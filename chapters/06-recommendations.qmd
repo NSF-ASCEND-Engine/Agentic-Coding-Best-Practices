@@ -1,0 +1,67 @@
+# Rallypoint One (RP1) recommendations
+
+RP1 has primarily used Anthropic's Claude Code over the last year, but its becoming apparent that
+OpenAI's Codex is catching up in capability.
+
+## Misc
+
+- While you can `/resume` a conversation, it's better to have Claude write out to a file what it was working on.
+- Keep tasks well-scoped, and use `/clear` often.  If a conversation is getting "compacted" its a sign you kept it going too long.
+  - A well-written `CLAUDE.md` or `AGENTS.md` makes it so `/clear` only loses task-specific context and not project-specific context.
+  - Well-scoped doesn't mean small.  Claude can spawn its own subagents.  You can take a big problem and ask Claude to (1) split it into steps, and (2) spawn agents to perform each one.
+- For code, keep your "AI slop" separate from anything curated or hand-written.  You can quickly rack up a lot of "technical debt".
+  - I like having `project/src/experimental/` for Claude-generated stuff that I move into `project/src/some_file.py` .
+  - Understanding the logic an agent implemented is almost always worthwhile.
+
+## Maintaining documentation
+
+RP1 uses an in-house developed `/autodocs` skill for writing documentation on packages.  The idea is
+to include
+
+## Maintaining documentation
+
+Claude is good at keeping documentation in sync with code. The task is well-scoped (read
+the code, update the prose to match), the result is a reviewable diff, and mistakes are low
+cost. It also writes documentation aimed at agents rather than people: condensed package and
+interface summaries that a later session reads instead of the package source.
+
+## Research-book primers
+
+Claude can draft a survey book on a subject (one Quarto book per topic, with chapters, a
+shared bibliography, and a section index) in a few sessions. I use these as background: an
+agent greps the index for the relevant section and reads only that section before planning a
+task in that domain. Example:
+[RP1Knowledge](https://github.com/RallypointOne/RP1Knowledge).
+
+## Validating references
+
+Generated bibliographies contain fabricated works and drifted metadata (wrong authors, year,
+venue, or DOI), and a fabricated reference looks the same as a real one. A skill that
+validates references is necessary for any generated document with citations. Mine runs two
+passes:
+
+- **Structural:** missing fields, duplicate keys, malformed DOIs/URLs, cited-but-undefined
+  and defined-but-uncited entries.
+- **Factual:** looks up each work and checks that its authors, title, year, venue, and DOI
+  match a real record.
+
+## A second brain
+
+A git repository of plain markdown pages gives the agent context that spans projects and
+sessions:
+
+- One page per entity: projects, people, organizations, concepts, documents.
+- An `index.md` for navigation and a `README.md` dashboard for current status.
+- A `CLAUDE.md` in the repository that defines the page schema and editing rules.
+- A pointer in the global instructions file saying what the repository contains and when to
+  consult it, and that it is read-only from other projects.
+
+```markdown
+# Knowledge vault
+- `~/path/to/vault` holds pages on projects, people, and concepts.
+  Start from `index.md`; navigate with grep.
+- Read-only from other projects. Edit it only from within the vault, following its CLAUDE.md.
+```
+
+Plain markdown needs no database or embedding index: the agent navigates with grep, and
+every change is a diff.

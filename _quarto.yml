@@ -15,12 +15,13 @@ book:
     collapse-level: 1
   chapters:
     - index.qmd
-    - chapters/01-tools.qmd
-    - chapters/02-context.qmd
-    - chapters/03-workflows.qmd
-    - chapters/04-extending.qmd
-    - chapters/05-failure-modes.qmd
-    - chapters/06-reference.qmd
+    - chapters/01-overview.qmd
+    # - chapters/02-context.qmd
+    # - chapters/03-workflows.qmd
+    # - chapters/04-extending.qmd
+    # - chapters/05-failure-modes.qmd
+    # - chapters/06-recommendations.qmd
+    # - chapters/07-reference.qmd
 
 format:
   html:

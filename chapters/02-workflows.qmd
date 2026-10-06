@@ -1,0 +1,14 @@
+# Workflows
+
+This chapter covers common ways people have discovered coding agents excel at.
+
+## What works well
+
+### A Second Brain
+
+### Research
+
+RP1 has Claude generate research books ([RP1Knowledge](https://github.com/RallypointOne/RP1Knowledge))
+on many different subjects.
+
+## What *doesn't* work well

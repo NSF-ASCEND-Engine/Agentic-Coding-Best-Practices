@@ -1,5 +1,0 @@
-# Reference
-
-::: {.callout-note}
-To be written.
-:::

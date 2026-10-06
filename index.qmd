@@ -1,9 +1,15 @@
 # Preface {.unnumbered}
 
-Best practices for software development with coding agents (Claude Code, OpenAI Codex, and
+Best practices for software development (and other tasks!) with coding agents (Claude Code, OpenAI Codex, and
 similar tools), drawn from two years of daily use.
 
 ::: {.callout-note}
 ## Work in progress
-Content has not been written yet.
+This website covers agentic coding at a snapshot in time (October 2026).  The tools are changing
+at a rapid pace, and good advice from 6 months ago may be a hindrance with today's models.
+:::
+
+::: {.callout-note}
+## Tools we know
+My experience is primarily with Claude code, and to a lesser extent Codex.
 :::

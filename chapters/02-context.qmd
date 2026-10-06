@@ -1,5 +1,0 @@
-# Context and instructions
-
-::: {.callout-note}
-To be written.
-:::

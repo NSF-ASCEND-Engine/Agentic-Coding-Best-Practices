@@ -1,0 +1,77 @@
+# Overview
+
+This chapter gives a high-level view of the agentic coding landscape.
+
+## The Tools
+
+A coding agent is a language model in a loop with tools: it reads files, runs shell
+commands, edits code, and checks the results, repeating until the task is done or it needs
+input.
+
+## Categories
+
+**Terminal agents** run in your shell against your local checkout.
+Examples: [Claude Code](https://docs.anthropic.com/en/docs/claude-code),
+[Codex CLI](https://github.com/openai/codex),
+[Gemini CLI](https://github.com/google-gemini/gemini-cli).
+
+**IDE agents** run inside the editor, with inline diffs and editor context.
+Examples: [Cursor](https://cursor.com),
+[GitHub Copilot](https://github.com/features/copilot) (agent mode),
+and the VS Code / JetBrains extensions for Claude Code and Codex.
+
+**Cloud agents** run in a remote sandbox and return a branch or pull request.
+Examples: Codex cloud, Claude Code on the web, the Copilot coding agent.
+
+
+| Tool | Vendor | Surfaces | Project instructions file |
+|---|---|---|---|
+| Claude Code | Anthropic | CLI, IDE, desktop, web | `CLAUDE.md`, recently supported `AGENTS.md` |
+| Codex | OpenAI | CLI, IDE, cloud | `AGENTS.md` |
+| Gemini CLI | Google | CLI | `GEMINI.md` |
+| GitHub Copilot | GitHub / Microsoft | IDE, GitHub | `.github/copilot-instructions.md` |
+| Cursor | Anysphere | IDE (VS Code fork) | `.cursor/rules/` |
+
+
+# Context
+
+An agent knows only what is in its *context window*: the system prompt, instructions files,
+the conversation, and tool output. The window is finite, and models use long contexts less
+reliably than short ones ([Liu et al., 2024](https://arxiv.org/abs/2307.03172)).
+
+## Instructions
+
+Each tool loads a markdown file at session start (`CLAUDE.md`, `AGENTS.md`, etc.).  Try to keep this
+short.  Include non-obvious notes, build/test commands, what not to touch, etc.
+
+- `AGENTS.md` (or equivalent) files can give per-directory instructions.  The instructions inside the directory an agent is working in is supposed to take priority over instructions from higher-level directories.
+- Adding a "Gotchas" section is often helpful:
+
+```markdown
+# Gotchas
+- Do not add docstrings, comments, or type annotations to code that wasn't changed.
+```
+
+## Skills
+
+- Skills are re-usable prompts.  Rather than retyping detailed instructions to perform some repeated task, you can invoke skills with slash commands.
+- E.g. `/clear` wipes the context from the session.
+- **Claude is good at writing its own skills**.  Examples:
+  - "create a `/wildfire-news` skill to find the top wildfire-related news stories in the last few days.  The user should be able to specify the region of interest and number of days.  Create an HTML report with links to the original articles."  Afterwards try `/wildfire-news Denver 7 days`.
+  - "create a `/primer` skill to research a subject and get me up to speed on it."  Then: `Give me a /primer on the state of the art of wildfire propagation modeling`.
+
+## Sessions
+
+- Be goal/task oriented.  Long-running conversations can cause agents to pull information from unrelated tasks.
+- Claude and codex will run a `/compact` skill if you hit the context limit.  This is usually a sign you're trying to do too much within a single session.
+- **Goals/tasks can be complex**.  You can start a session with "help me break down this task into manageable pieces."
+  - Both Claude and Codex have a `/plan` skill that can research how to approach a task.  I like instructing Claude to save them in a human-reviewable place, e.g. `plans/code-refactor.md`
+
+### Subagents
+
+- Claude and Codex can spawn subagents to "work for" the one you're having a session with.  They will do this themselves or you can specifically instruct them to do so.
+  - "Analyze the approach of my fire model.  Spawn agents to compare and contrast my model with state-of-the-art open source wildfire modeling projects."
+
+## Hooks
+
+## Model Context Protocol (MCP)
