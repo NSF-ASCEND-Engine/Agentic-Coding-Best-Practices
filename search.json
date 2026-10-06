@@ -4,69 +4,79 @@
     "href": "index.html",
     "title": "Agentic Coding Best Practices",
     "section": "",
-    "text": "Preface\nBest practices for software development with coding agents (Claude Code, OpenAI Codex, and similar tools), drawn from two years of daily use.\n\n\n\n\n\n\nWork in progress\n\n\n\nContent has not been written yet.",
+    "text": "Preface\nBest practices for software development (and other tasks!) with coding agents (Claude Code, OpenAI Codex, and similar tools), drawn from two years of daily use.\n\n\n\n\n\n\nWork in progress\n\n\n\nThis website covers agentic coding at a snapshot in time (October 2026). The tools are changing at a rapid pace, and good advice from 6 months ago may be a hindrance with today’s models.\n\n\n\n\n\n\n\n\nTools we know\n\n\n\nMy experience is primarily with Claude code, and to a lesser extent Codex.",
     "crumbs": [
       "Preface"
     ]
   },
   {
-    "objectID": "chapters/01-tools.html",
-    "href": "chapters/01-tools.html",
-    "title": "1  The tools",
+    "objectID": "chapters/01-overview.html",
+    "href": "chapters/01-overview.html",
+    "title": "1  Overview",
     "section": "",
-    "text": "To be written.",
+    "text": "1.1 The Tools\nThis chapter gives a high-level view of the agentic coding landscape.\nA coding agent is a language model in a loop with tools: it reads files, runs shell commands, edits code, and checks the results, repeating until the task is done or it needs input.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>The tools</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
     ]
   },
   {
-    "objectID": "chapters/02-context.html",
-    "href": "chapters/02-context.html",
-    "title": "2  Context and instructions",
-    "section": "",
-    "text": "To be written.",
+    "objectID": "chapters/01-overview.html#categories",
+    "href": "chapters/01-overview.html#categories",
+    "title": "1  Overview",
+    "section": "1.2 Categories",
+    "text": "1.2 Categories\nTerminal agents run in your shell against your local checkout. Examples: Claude Code, Codex CLI, Gemini CLI.\nIDE agents run inside the editor, with inline diffs and editor context. Examples: Cursor, GitHub Copilot (agent mode), and the VS Code / JetBrains extensions for Claude Code and Codex.\nCloud agents run in a remote sandbox and return a branch or pull request. Examples: Codex cloud, Claude Code on the web, the Copilot coding agent.\n\n\n\n\n\n\n\n\n\nTool\nVendor\nSurfaces\nProject instructions file\n\n\n\n\nClaude Code\nAnthropic\nCLI, IDE, desktop, web\nCLAUDE.md, recently supported AGENTS.md\n\n\nCodex\nOpenAI\nCLI, IDE, cloud\nAGENTS.md\n\n\nGemini CLI\nGoogle\nCLI\nGEMINI.md\n\n\nGitHub Copilot\nGitHub / Microsoft\nIDE, GitHub\n.github/copilot-instructions.md\n\n\nCursor\nAnysphere\nIDE (VS Code fork)\n.cursor/rules/",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Context and instructions</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
     ]
   },
   {
-    "objectID": "chapters/03-workflows.html",
-    "href": "chapters/03-workflows.html",
-    "title": "3  Workflows",
-    "section": "",
-    "text": "To be written.",
+    "objectID": "chapters/01-overview.html#instructions",
+    "href": "chapters/01-overview.html#instructions",
+    "title": "1  Overview",
+    "section": "2.1 Instructions",
+    "text": "2.1 Instructions\nEach tool loads a markdown file at session start (CLAUDE.md, AGENTS.md, etc.). Try to keep this short. Include non-obvious notes, build/test commands, what not to touch, etc.\n\nAGENTS.md (or equivalent) files can give per-directory instructions. The instructions inside the directory an agent is working in is supposed to take priority over instructions from higher-level directories.\nAdding a “Gotchas” section is often helpful:\n\n# Gotchas\n- Do not add docstrings, comments, or type annotations to code that wasn't changed.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
     ]
   },
   {
-    "objectID": "chapters/04-extending.html",
-    "href": "chapters/04-extending.html",
-    "title": "4  Skills, agents, hooks, and MCP",
-    "section": "",
-    "text": "To be written.",
+    "objectID": "chapters/01-overview.html#skills",
+    "href": "chapters/01-overview.html#skills",
+    "title": "1  Overview",
+    "section": "2.2 Skills",
+    "text": "2.2 Skills\n\nSkills are re-usable prompts. Rather than retyping detailed instructions to perform some repeated task, you can invoke skills with slash commands.\nE.g. /clear wipes the context from the session.\nClaude is good at writing its own skills. Examples:\n\n“create a /wildfire-news skill to find the top wildfire-related news stories in the last few days. The user should be able to specify the region of interest and number of days. Create an HTML report with links to the original articles.” Afterwards try /wildfire-news Denver 7 days.\n“create a /primer skill to research a subject and get me up to speed on it.” Then: Give me a /primer on the state of the art of wildfire propagation modeling.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Skills, agents, hooks, and MCP</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
     ]
   },
   {
-    "objectID": "chapters/05-failure-modes.html",
-    "href": "chapters/05-failure-modes.html",
-    "title": "5  Failure modes",
-    "section": "",
-    "text": "To be written.",
+    "objectID": "chapters/01-overview.html#sessions",
+    "href": "chapters/01-overview.html#sessions",
+    "title": "1  Overview",
+    "section": "2.3 Sessions",
+    "text": "2.3 Sessions\n\nBe goal/task oriented. Long-running conversations can cause agents to pull information from unrelated tasks.\nClaude and codex will run a /compact skill if you hit the context limit. This is usually a sign you’re trying to do too much within a single session.\nGoals/tasks can be complex. You can start a session with “help me break down this task into manageable pieces.”\n\nBoth Claude and Codex have a /plan skill that can research how to approach a task. I like instructing Claude to save them in a human-reviewable place, e.g. plans/code-refactor.md\n\n\n\n2.3.1 Subagents\n\nClaude and Codex can spawn subagents to “work for” the one you’re having a session with. They will do this themselves or you can specifically instruct them to do so.\n\n“Analyze the approach of my fire model. Spawn agents to compare and contrast my model with state-of-the-art open source wildfire modeling projects.”",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Failure modes</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
     ]
   },
   {
-    "objectID": "chapters/06-reference.html",
-    "href": "chapters/06-reference.html",
-    "title": "6  Reference",
-    "section": "",
-    "text": "To be written.",
+    "objectID": "chapters/01-overview.html#hooks",
+    "href": "chapters/01-overview.html#hooks",
+    "title": "1  Overview",
+    "section": "2.4 Hooks",
+    "text": "2.4 Hooks",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Reference</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-overview.html#model-context-protocol-mcp",
+    "href": "chapters/01-overview.html#model-context-protocol-mcp",
+    "title": "1  Overview",
+    "section": "2.5 Model Context Protocol (MCP)",
+    "text": "2.5 Model Context Protocol (MCP)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
     ]
   }
 ]
