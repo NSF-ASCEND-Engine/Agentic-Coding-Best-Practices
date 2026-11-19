@@ -1,0 +1,46 @@
+# Tool reference
+
+Details that change often.  Checked against vendor documentation on 2026-09-30 unless noted.
+
+## Claude Code and Codex feature map
+
+| | Claude Code | Codex |
+|---|---|---|
+| Instructions file | `CLAUDE.md` (reads `AGENTS.md` if there is no `CLAUDE.md`) | `AGENTS.md` |
+| Settings | `.claude/settings.json` | `.codex/config.toml` |
+| Skills folder | `.claude/skills/<name>/SKILL.md` | `.agents/skills/<name>/SKILL.md` |
+| Invoke a skill | `/name` | `$name` |
+| Plan without editing | `/plan`, `Shift+Tab` | `/plan`, `Shift+Tab` |
+| Work until a condition holds | `/goal` | `/goal` |
+| Review the diff | `/code-review` | `/review` |
+| Run one prompt, no session | `claude -p "..."` | `codex exec "..."` |
+| Add an MCP server | `claude mcp add` | `codex mcp add` |
+| Sandbox | `/sandbox` (off by default) | On by default; `--sandbox <mode>` |
+| Skip all checks | `--dangerously-skip-permissions` | `--yolo` |
+| GitHub Action | `anthropics/claude-code-action` | `openai/codex-action` |
+
+## Model and cost selection
+
+| | Most capable | Middle | Cheapest |
+|---|---|---|---|
+| Claude Code (November 2026) | Fable | Opus, Sonnet | Haiku |
+| Codex | `gpt-6-astra` | `gpt-6.1-sol` | `gpt-6-luna` |
+
+- Both tools have a reasoning *effort* setting (`/effort` in Claude Code, `model_reasoning_effort` in Codex).  Higher effort is slower and uses more of your quota.
+- A common split: a capable model at high effort for planning and review, a cheaper model or lower effort for routine implementation.
+- Context is a cost.  MCP servers, long instructions files, and long sessions are all billed on every request.
+- Resuming a session that has been idle for over an hour can re-bill the whole context.  Start a new session instead.
+
+## Superseded guidance
+
+Advice in older posts that no longer applies.
+
+| Old advice | Current status |
+|---|---|
+| "think", "think hard", "think harder" keywords (Claude) | Only `ultrathink` is recognized.  Use `/effort`. |
+| All-caps "CRITICAL" / "YOU MUST" instructions | Discouraged; current models over-apply them |
+| `.claude/commands/` custom commands | Merged into skills; still works |
+| Routine `--dangerously-skip-permissions` in a container (Claude) | Auto mode is the default; bypass is for isolated environments only |
+| Symlink `AGENTS.md` to `CLAUDE.md` | Claude Code reads `AGENTS.md` when there is no `CLAUDE.md` |
+| `codex --full-auto` | Deprecated; use `--sandbox workspace-write` |
+| GPT-5.x model names and prompting guides (Codex) | Models retired; current names are in the table above |

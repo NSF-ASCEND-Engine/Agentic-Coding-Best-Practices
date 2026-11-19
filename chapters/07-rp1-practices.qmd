@@ -1,24 +1,11 @@
-# Rallypoint One (RP1) recommendations
+# Rallypoint One (RP1) practices
 
 RP1 has primarily used Anthropic's Claude Code over the last year, but its becoming apparent that
 OpenAI's Codex is catching up in capability.
 
-## Misc
-
-- While you can `/resume` a conversation, it's better to have Claude write out to a file what it was working on.
-- Keep tasks well-scoped, and use `/clear` often.  If a conversation is getting "compacted" its a sign you kept it going too long.
-  - A well-written `CLAUDE.md` or `AGENTS.md` makes it so `/clear` only loses task-specific context and not project-specific context.
-  - Well-scoped doesn't mean small.  Claude can spawn its own subagents.  You can take a big problem and ask Claude to (1) split it into steps, and (2) spawn agents to perform each one.
-- For code, keep your "AI slop" separate from anything curated or hand-written.  You can quickly rack up a lot of "technical debt".
-  - I like having `project/src/experimental/` for Claude-generated stuff that I move into `project/src/some_file.py` .
-  - Understanding the logic an agent implemented is almost always worthwhile.
-
 ## Maintaining documentation
 
-RP1 uses an in-house developed `/autodocs` skill for writing documentation on packages.  The idea is
-to include
-
-## Maintaining documentation
+RP1 uses an in-house developed `/autodocs` skill for writing documentation on packages.
 
 Claude is good at keeping documentation in sync with code. The task is well-scoped (read
 the code, update the prose to match), the result is a reviewable diff, and mistakes are low

@@ -1,0 +1,49 @@
+# Failure modes
+
+Agents fail in recurring ways.  Most reports are anecdotes tied to one model version, so treat
+the list as things to watch for, not as measured rates.
+
+## Unverified success
+
+- The agent reports that the work is done and correct when it is not.
+- Signs: placeholder implementations, hardcoded values, and tests that were disabled, deleted, or rewritten to pass.
+- Read the diff of the tests, not only the code.  Tell the agent to report a test it thinks is wrong rather than change it.
+- See [Verify](03-workflows.qmd#explore-plan-implement-verify).
+
+## Scope creep
+
+- The agent adds things you did not ask for: extra features, abstractions for one-time use, defensive checks, comments on untouched code.
+- Each addition is plausible on its own.  Together they make the diff hard to review.
+- Add a rule to the [instructions file](02-context.qmd#instructions): "Only make changes that are directly requested or clearly necessary."
+
+## Assumptions
+
+- A vague prompt gets filled in with guesses, sometimes large ones, and the agent does not always say so.
+- State what is out of scope, and ask the agent to list its assumptions before it starts.
+
+## Repeated corrections
+
+- Correcting the same mistake over and over in chat fills the context with failed attempts.
+- After the second correction, `/clear` and rewrite the prompt.  If the mistake recurs across sessions, add a rule to the instructions file or a check the agent can run.
+
+## Generated-code debt
+
+- For code, keep your "AI slop" separate from anything curated or hand-written.  You can quickly rack up a lot of "technical debt".
+  - I like having `project/src/experimental/` for Claude-generated stuff that I move into `project/src/some_file.py` .
+  - Understanding the logic an agent implemented is almost always worthwhile.
+
+## Fabricated references
+
+See [Validating references](07-rp1-practices.qmd#validating-references).
+
+## Over-long sessions
+
+- A session that covers several unrelated tasks carries all of them in context.  See [Sessions](02-context.qmd#sessions).
+- Long unsupervised runs drift.  One [report](https://lucumr.pocoo.org/2026/9/7/astra-why/) describes a 35-hour run that produced nothing usable.  Set a time limit and check intermediate output.
+
+## What *doesn't* work well
+
+- Work you cannot verify.  If there is no test, build, or reference result to check against, you are relying on the agent's own claim.
+- Vague objectives such as "improve performance" or "clean this up".
+- Security-sensitive and performance-critical code.  The output looks as confident as any other and still needs expert review.
+- Visual checks.  Agents miss obvious layout and plotting bugs even when they look at a screenshot.

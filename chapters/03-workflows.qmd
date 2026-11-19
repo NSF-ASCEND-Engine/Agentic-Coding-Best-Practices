@@ -1,0 +1,53 @@
+# Workflows
+
+Most tasks follow one loop: the agent reads the relevant code, proposes an approach, makes the
+change, and checks the result.  The vendor guides for
+[Claude Code](https://code.claude.com/docs/en/best-practices) and
+[Codex](https://learn.chatgpt.com/guides/best-practices) describe the same loop.
+
+## Explore, plan, implement, verify
+
+- **Explore.**  Ask questions before asking for changes.  "How does logging work in this project?" loads the relevant files into context and shows whether the agent understands the code.
+- **Plan.**  `/plan` makes the agent research and propose an approach without editing files.
+  - Skip it when you could describe the diff in one sentence.  Use it when the change spans several files or the code is unfamiliar.
+- **Implement.**  For large tasks, save the plan to a file and implement it in a fresh session, one step at a time, with a commit after each step.
+- **Verify.**  Give the agent a check it can run: tests, a build, a script, a screenshot to compare.  Ask for evidence (the test output), not a statement that it works.
+  - For bugs: "write a failing test that reproduces the issue, then fix it."
+  - `/goal <condition>` keeps the agent working until the condition holds.  It needs a clear finish line: "all tests pass", not "improve performance".
+- Interrupt as soon as the agent heads in the wrong direction.  If you have corrected the same issue twice, `/clear` and start over with a more specific prompt.
+
+## Prompting
+
+- State the goal, where to look, the constraints, and what "done" means.
+  - Vague: "fix the login bug."
+  - Specific: "Login fails after the session times out.  Look at token refresh in `src/auth/`.  Write a failing test first, then fix it.  Don't change the public API."
+- Wording decides whether the agent acts.  "Can you suggest changes to this function?" gets suggestions.  "Change this function" gets edits.
+- Give the reason behind a constraint.  The agent can then apply it to cases you didn't list.
+- Paste the real thing: error messages, stack traces, screenshots, `@path/to/file` references.
+- Point to an existing example to imitate: "add a reader for NetCDF files that follows the pattern in `readers/geotiff.py`."
+- Write "prefer Y" rather than "never X".  All-caps emphasis ("CRITICAL", "YOU MUST") makes current models over-apply the instruction.
+
+## Delegating to subagents
+
+[Subagents](04-extending.qmd#subagents) start with no context and return only a summary.
+
+- Delegate work that is independent, or whose intermediate output you don't need: searching a large codebase, surveying literature, steps that can run in parallel.
+- Don't delegate small, sequential, or single-file tasks.  Writing the brief costs more than doing the work.
+- **Review in a fresh context.**  An agent reviewing code it just wrote is biased toward that code.  `/code-review` (Claude) and `/review` (Codex) review the current diff separately.
+  - Limit reviewers to correctness and missed requirements.  A reviewer asked to find problems reports some even when the work is sound.
+  - Some users have one vendor's agent review the other's work.  Cap it at one review pass and one fix pass.
+- **Parallel sessions** need separate checkouts, e.g. one git worktree per session.  Your review time is the limit, so they suit research, prototypes, and low-stakes maintenance more than core code.
+
+## Automation and CI
+
+- `claude -p "prompt"` and `codex exec "prompt"` run a single prompt without an interactive session, for scripts and CI.
+- An unattended run cannot ask questions.  The prompt must say what success looks like and what to do with the result.
+- Grant only the permissions the job needs.  `codex exec` is read-only by default; `claude -p` takes `--allowedTools`.
+- To apply one change across many files, have the agent write the file list, then loop a headless call over it.  Try it on two or three files first.
+- Both vendors publish GitHub Actions ([Claude](https://code.claude.com/docs/en/github-actions), [Codex](https://github.com/openai/codex-action)) that respond to `@claude` or `@codex review` on a pull request.  Keep a human review before merge.
+- Linters, type checkers, and pre-commit hooks give the agent feedback without you in the loop.
+
+## What works well
+
+Worked examples (a second brain, research books, documentation upkeep) are in
+[RP1 practices](07-rp1-practices.qmd).

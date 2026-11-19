@@ -1,0 +1,36 @@
+# Permissions and security
+
+An agent runs commands as you, with your files and credentials.  Two controls limit it: a
+*sandbox* restricts what it can touch, and *approvals* decide when it must ask first.
+
+## Sandboxing
+
+- A sandbox is an operating-system restriction on file writes and network access.  It applies to every command the agent runs, including scripts it wrote.
+- Codex sandboxes by default: writes are limited to the project folder and the network is off.  In Claude Code, `/sandbox` turns it on.
+- Both halves matter.  Without network limits, an agent can send out your SSH keys.  Without file limits, it can change things outside the project.
+
+## Approval modes
+
+| | Claude Code | Codex |
+|---|---|---|
+| Read only | `plan` mode | `--sandbox read-only` |
+| Default | `auto`: acts, with a background safety check | `workspace-write` sandbox, asks to leave it |
+| No checks | `--dangerously-skip-permissions` | `--yolo` |
+
+- Allowlist commands you approve repeatedly (`/permissions` in Claude Code).  After many prompts in a row you stop reading them.
+- A boundary stated in chat ("don't push") can be lost when the session compacts.  For a guarantee, use a deny rule or a [hook](04-extending.qmd#hooks).
+- Use the no-checks modes only inside a container or VM that holds no credentials.  A July 2026 Codex bug [could delete the home directory](https://simonwillison.net/2026/Jul/16/bad-codex-bug/) in that mode.
+- Commit before starting a task.  Git is the undo button.
+
+## Prompt injection
+
+- Anything the agent reads can contain instructions: web pages, issues, files from other people, MCP tool output.  The agent may follow them.
+- The risk grows with each permission.  An agent with no network access cannot send data anywhere.
+- Keep credentials out of reach.  Don't paste API keys into the chat, and don't run agents in a shell with production credentials loaded.
+
+## Unattended runs
+
+- An unattended agent cannot ask for approval, so its permissions are the only limit.  Grant the minimum: `codex exec` is read-only by default; `claude -p` takes `--allowedTools`.
+- In CI, the repository's own configuration is input.  `claude -p` runs a repository's hooks and MCP servers without a trust prompt unless you pass `--bare`.
+- Pass API keys to the single command that needs them, not to the whole job.
+- Have the agent open a pull request.  Do not let it merge or deploy.

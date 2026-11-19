@@ -1,0 +1,29 @@
+# Context
+
+An agent knows only what is in its *context window*: the system prompt, instructions files,
+the conversation, and tool output. The window is finite, and models use long contexts less
+reliably than short ones ([Liu et al., 2024](https://arxiv.org/abs/2307.03172)).
+
+## Instructions
+
+Each tool loads a markdown file at session start (`CLAUDE.md`, `AGENTS.md`, etc.).  Try to keep this
+short.  Include non-obvious notes, build/test commands, what not to touch, etc.
+
+- `AGENTS.md` (or equivalent) files can give per-directory instructions.  The instructions inside the directory an agent is working in is *supposed* to take priority over instructions from higher-level directories.
+- Adding a "Gotchas" section is often helpful to protect against unwanted behavior:
+
+```markdown
+# Gotchas
+- Do not add docstrings, comments, or type annotations to code that wasn't changed.
+```
+
+## Sessions
+
+- Be goal/task oriented.  Long-running conversations can cause agents to pull information from unrelated tasks.
+- Claude and codex will run a `/compact` skill if you hit the context limit.  This is usually a sign you're trying to do too much within a single session.
+- **Goals/tasks can be complex**.  You can start a session with "help me break down this task into manageable pieces."
+  - Both Claude and Codex have a `/plan` skill that can research how to approach a task.  I like instructing Claude to save them in a human-reviewable place, e.g. `plans/code-refactor.md`
+- While you can `/resume` a conversation, I prefer to save a (markdown) file that describes the work.
+- Keep tasks well-scoped, and use `/clear` between tasks.
+  - A well-written `CLAUDE.md` or `AGENTS.md` makes it so `/clear` only loses task-specific context and not project-specific context.
+  - Well-scoped doesn't mean small.  Claude can spawn its own subagents.  You can take a big problem and ask Claude to (1) split it into steps, and (2) spawn agents to perform each one.

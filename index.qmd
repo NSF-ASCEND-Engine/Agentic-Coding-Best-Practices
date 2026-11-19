@@ -1,15 +1,22 @@
 # Preface {.unnumbered}
 
-Best practices for software development (and other tasks!) with coding agents (Claude Code, OpenAI Codex, and
-similar tools), drawn from two years of daily use.
+Best practices for software development (and other tasks!) with coding agents, drawn from two years of daily use.
 
-::: {.callout-note}
-## Work in progress
-This website covers agentic coding at a snapshot in time (October 2026).  The tools are changing
-at a rapid pace, and good advice from 6 months ago may be a hindrance with today's models.
+The focus is largely on **terminal agents** that run in your shell against your local files, e.g.
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code),
+- [Codex CLI](https://github.com/openai/codex),
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli).
+
+::: {.callout-important}
+## Disclaimer
+The content of this book is largely the personal opinion of the author.  It does not represent
+the position of the NSF ASCEND Engine, Rallypoint One, or any other organization.
+
+His experience is primarily with Anthropic Claude Code and to a lesser extent OpenAI Codex.
 :::
 
 ::: {.callout-note}
-## Tools we know
-My experience is primarily with Claude code, and to a lesser extent Codex.
+## Work in progress
+This website covers agentic coding at a snapshot in time (November 2026).  The tools are changing
+at a rapid pace, so follow advice with caution.
 :::

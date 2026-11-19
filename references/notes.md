@@ -1,0 +1,1 @@
+- Keep global instructions minimal.  Models change rapidly
