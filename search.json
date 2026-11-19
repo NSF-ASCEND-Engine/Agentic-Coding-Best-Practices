@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Agentic Coding Best Practices",
     "section": "",
-    "text": "Preface\nBest practices for software development (and other tasks!) with coding agents (Claude Code, OpenAI Codex, and similar tools), drawn from two years of daily use.\n\n\n\n\n\n\nWork in progress\n\n\n\nThis website covers agentic coding at a snapshot in time (October 2026). The tools are changing at a rapid pace, and good advice from 6 months ago may be a hindrance with today’s models.\n\n\n\n\n\n\n\n\nTools we know\n\n\n\nMy experience is primarily with Claude code, and to a lesser extent Codex.",
+    "text": "Preface\nBest practices for software development (and other tasks!) with coding agents, drawn from two years of daily use.\nThe focus is largely on terminal agents that run in your shell against your local files, e.g. - Claude Code, - Codex CLI, - Gemini CLI.\n\n\n\n\n\n\nDisclaimer\n\n\n\nThe content of this book is largely the personal opinion of the author. It does not represent the position of the NSF ASCEND Engine, Rallypoint One, or any other organization.\nHis experience is primarily with Anthropic Claude Code and to a lesser extent OpenAI Codex.\n\n\n\n\n\n\n\n\nWork in progress\n\n\n\nThis website covers agentic coding at a snapshot in time (November 2026). The tools are changing at a rapid pace, so follow advice with caution.",
     "crumbs": [
       "Preface"
     ]
@@ -20,6 +20,16 @@
     ]
   },
   {
+    "objectID": "chapters/01-overview.html#the-tools",
+    "href": "chapters/01-overview.html#the-tools",
+    "title": "1  Overview",
+    "section": "",
+    "text": "The loop:\n\nUser provides instructions (i.e. a prompt).\nAgent uses tools to complete the task, answer the question, etc. from the prompt.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+    ]
+  },
+  {
     "objectID": "chapters/01-overview.html#categories",
     "href": "chapters/01-overview.html#categories",
     "title": "1  Overview",
@@ -30,53 +40,377 @@
     ]
   },
   {
-    "objectID": "chapters/01-overview.html#instructions",
-    "href": "chapters/01-overview.html#instructions",
-    "title": "1  Overview",
-    "section": "2.1 Instructions",
-    "text": "2.1 Instructions\nEach tool loads a markdown file at session start (CLAUDE.md, AGENTS.md, etc.). Try to keep this short. Include non-obvious notes, build/test commands, what not to touch, etc.\n\nAGENTS.md (or equivalent) files can give per-directory instructions. The instructions inside the directory an agent is working in is supposed to take priority over instructions from higher-level directories.\nAdding a “Gotchas” section is often helpful:\n\n# Gotchas\n- Do not add docstrings, comments, or type annotations to code that wasn't changed.",
+    "objectID": "chapters/02-context.html",
+    "href": "chapters/02-context.html",
+    "title": "2  Context",
+    "section": "",
+    "text": "2.1 Instructions\nAn agent knows only what is in its context window: the system prompt, instructions files, the conversation, and tool output. The window is finite, and models use long contexts less reliably than short ones (Liu et al., 2024).\nEach tool loads a markdown file at session start (CLAUDE.md, AGENTS.md, etc.). Try to keep this short. Include non-obvious notes, build/test commands, what not to touch, etc.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Context</span>"
     ]
   },
   {
-    "objectID": "chapters/01-overview.html#skills",
-    "href": "chapters/01-overview.html#skills",
-    "title": "1  Overview",
-    "section": "2.2 Skills",
-    "text": "2.2 Skills\n\nSkills are re-usable prompts. Rather than retyping detailed instructions to perform some repeated task, you can invoke skills with slash commands.\nE.g. /clear wipes the context from the session.\nClaude is good at writing its own skills. Examples:\n\n“create a /wildfire-news skill to find the top wildfire-related news stories in the last few days. The user should be able to specify the region of interest and number of days. Create an HTML report with links to the original articles.” Afterwards try /wildfire-news Denver 7 days.\n“create a /primer skill to research a subject and get me up to speed on it.” Then: Give me a /primer on the state of the art of wildfire propagation modeling.",
+    "objectID": "chapters/02-context.html#instructions",
+    "href": "chapters/02-context.html#instructions",
+    "title": "2  Context",
+    "section": "",
+    "text": "AGENTS.md (or equivalent) files can give per-directory instructions. The instructions inside the directory an agent is working in is supposed to take priority over instructions from higher-level directories.\nAdding a “Gotchas” section is often helpful to protect against unwanted behavior:\n\n# Gotchas\n- Do not add docstrings, comments, or type annotations to code that wasn't changed.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Context</span>"
     ]
   },
   {
-    "objectID": "chapters/01-overview.html#sessions",
-    "href": "chapters/01-overview.html#sessions",
-    "title": "1  Overview",
-    "section": "2.3 Sessions",
-    "text": "2.3 Sessions\n\nBe goal/task oriented. Long-running conversations can cause agents to pull information from unrelated tasks.\nClaude and codex will run a /compact skill if you hit the context limit. This is usually a sign you’re trying to do too much within a single session.\nGoals/tasks can be complex. You can start a session with “help me break down this task into manageable pieces.”\n\nBoth Claude and Codex have a /plan skill that can research how to approach a task. I like instructing Claude to save them in a human-reviewable place, e.g. plans/code-refactor.md\n\n\n\n2.3.1 Subagents\n\nClaude and Codex can spawn subagents to “work for” the one you’re having a session with. They will do this themselves or you can specifically instruct them to do so.\n\n“Analyze the approach of my fire model. Spawn agents to compare and contrast my model with state-of-the-art open source wildfire modeling projects.”",
+    "objectID": "chapters/02-context.html#sessions",
+    "href": "chapters/02-context.html#sessions",
+    "title": "2  Context",
+    "section": "2.2 Sessions",
+    "text": "2.2 Sessions\n\nBe goal/task oriented. Long-running conversations can cause agents to pull information from unrelated tasks.\nClaude and codex will run a /compact skill if you hit the context limit. This is usually a sign you’re trying to do too much within a single session.\nGoals/tasks can be complex. You can start a session with “help me break down this task into manageable pieces.”\n\nBoth Claude and Codex have a /plan skill that can research how to approach a task. I like instructing Claude to save them in a human-reviewable place, e.g. plans/code-refactor.md\n\nWhile you can /resume a conversation, I prefer to save a (markdown) file that describes the work.\nKeep tasks well-scoped, and use /clear between tasks.\n\nA well-written CLAUDE.md or AGENTS.md makes it so /clear only loses task-specific context and not project-specific context.\nWell-scoped doesn’t mean small. Claude can spawn its own subagents. You can take a big problem and ask Claude to (1) split it into steps, and (2) spawn agents to perform each one.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Context</span>"
     ]
   },
   {
-    "objectID": "chapters/01-overview.html#hooks",
-    "href": "chapters/01-overview.html#hooks",
-    "title": "1  Overview",
-    "section": "2.4 Hooks",
-    "text": "2.4 Hooks",
+    "objectID": "chapters/03-workflows.html",
+    "href": "chapters/03-workflows.html",
+    "title": "3  Workflows",
+    "section": "",
+    "text": "3.1 Explore, plan, implement, verify\nMost tasks follow one loop: the agent reads the relevant code, proposes an approach, makes the change, and checks the result. The vendor guides for Claude Code and Codex describe the same loop.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
     ]
   },
   {
-    "objectID": "chapters/01-overview.html#model-context-protocol-mcp",
-    "href": "chapters/01-overview.html#model-context-protocol-mcp",
-    "title": "1  Overview",
-    "section": "2.5 Model Context Protocol (MCP)",
-    "text": "2.5 Model Context Protocol (MCP)",
+    "objectID": "chapters/03-workflows.html#explore-plan-implement-verify",
+    "href": "chapters/03-workflows.html#explore-plan-implement-verify",
+    "title": "3  Workflows",
+    "section": "",
+    "text": "Explore. Ask questions before asking for changes. “How does logging work in this project?” loads the relevant files into context and shows whether the agent understands the code.\nPlan. /plan makes the agent research and propose an approach without editing files.\n\nSkip it when you could describe the diff in one sentence. Use it when the change spans several files or the code is unfamiliar.\n\nImplement. For large tasks, save the plan to a file and implement it in a fresh session, one step at a time, with a commit after each step.\nVerify. Give the agent a check it can run: tests, a build, a script, a screenshot to compare. Ask for evidence (the test output), not a statement that it works.\n\nFor bugs: “write a failing test that reproduces the issue, then fix it.”\n/goal &lt;condition&gt; keeps the agent working until the condition holds. It needs a clear finish line: “all tests pass”, not “improve performance”.\n\nInterrupt as soon as the agent heads in the wrong direction. If you have corrected the same issue twice, /clear and start over with a more specific prompt.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-workflows.html#prompting",
+    "href": "chapters/03-workflows.html#prompting",
+    "title": "3  Workflows",
+    "section": "3.2 Prompting",
+    "text": "3.2 Prompting\n\nState the goal, where to look, the constraints, and what “done” means.\n\nVague: “fix the login bug.”\nSpecific: “Login fails after the session times out. Look at token refresh in src/auth/. Write a failing test first, then fix it. Don’t change the public API.”\n\nWording decides whether the agent acts. “Can you suggest changes to this function?” gets suggestions. “Change this function” gets edits.\nGive the reason behind a constraint. The agent can then apply it to cases you didn’t list.\nPaste the real thing: error messages, stack traces, screenshots, @path/to/file references.\nPoint to an existing example to imitate: “add a reader for NetCDF files that follows the pattern in readers/geotiff.py.”\nWrite “prefer Y” rather than “never X”. All-caps emphasis (“CRITICAL”, “YOU MUST”) makes current models over-apply the instruction.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-workflows.html#delegating-to-subagents",
+    "href": "chapters/03-workflows.html#delegating-to-subagents",
+    "title": "3  Workflows",
+    "section": "3.3 Delegating to subagents",
+    "text": "3.3 Delegating to subagents\nSubagents start with no context and return only a summary.\n\nDelegate work that is independent, or whose intermediate output you don’t need: searching a large codebase, surveying literature, steps that can run in parallel.\nDon’t delegate small, sequential, or single-file tasks. Writing the brief costs more than doing the work.\nReview in a fresh context. An agent reviewing code it just wrote is biased toward that code. /code-review (Claude) and /review (Codex) review the current diff separately.\n\nLimit reviewers to correctness and missed requirements. A reviewer asked to find problems reports some even when the work is sound.\nSome users have one vendor’s agent review the other’s work. Cap it at one review pass and one fix pass.\n\nParallel sessions need separate checkouts, e.g. one git worktree per session. Your review time is the limit, so they suit research, prototypes, and low-stakes maintenance more than core code.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-workflows.html#automation-and-ci",
+    "href": "chapters/03-workflows.html#automation-and-ci",
+    "title": "3  Workflows",
+    "section": "3.4 Automation and CI",
+    "text": "3.4 Automation and CI\n\nclaude -p \"prompt\" and codex exec \"prompt\" run a single prompt without an interactive session, for scripts and CI.\nAn unattended run cannot ask questions. The prompt must say what success looks like and what to do with the result.\nGrant only the permissions the job needs. codex exec is read-only by default; claude -p takes --allowedTools.\nTo apply one change across many files, have the agent write the file list, then loop a headless call over it. Try it on two or three files first.\nBoth vendors publish GitHub Actions (Claude, Codex) that respond to @claude or @codex review on a pull request. Keep a human review before merge.\nLinters, type checkers, and pre-commit hooks give the agent feedback without you in the loop.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-workflows.html#what-works-well",
+    "href": "chapters/03-workflows.html#what-works-well",
+    "title": "3  Workflows",
+    "section": "3.5 What works well",
+    "text": "3.5 What works well\nWorked examples (a second brain, research books, documentation upkeep) are in RP1 practices.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Workflows</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html",
+    "href": "chapters/04-extending.html",
+    "title": "4  Extending",
+    "section": "",
+    "text": "4.1 Skills\nThis chapter covers the ways to add capabilities to an agent: skills, subagents, hooks, and MCP servers.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Extending</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html#skills",
+    "href": "chapters/04-extending.html#skills",
+    "title": "4  Extending",
+    "section": "",
+    "text": "Skills are re-usable prompts. Rather than retyping detailed instructions to perform some repeated task, you can invoke skills with slash commands.\nE.g. /clear wipes the context from the session.\nClaude is good at writing its own skills. Examples:\n\n“create a /wildfire-news skill to find the top wildfire-related news stories in the last few days. The user should be able to specify the region of interest and number of days. Create an HTML report with links to the original articles.” Afterwards try /wildfire-news Denver 7 days.\n“create a /primer skill to research a subject and get me up to speed on it.” Then: Give me a /primer on the state of the art of wildfire propagation modeling.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Extending</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html#subagents",
+    "href": "chapters/04-extending.html#subagents",
+    "title": "4  Extending",
+    "section": "4.2 Subagents",
+    "text": "4.2 Subagents\n\nClaude and Codex can spawn subagents to “work for” the one you’re having a session with. They will do this themselves or you can specifically instruct them to do so.\n\n“Analyze the approach of my fire model. Spawn agents to compare and contrast my model with state-of-the-art open source wildfire modeling projects.”",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Extending</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html#hooks",
+    "href": "chapters/04-extending.html#hooks",
+    "title": "4  Extending",
+    "section": "4.3 Hooks",
+    "text": "4.3 Hooks\n\nA hook is a command the tool runs at a fixed event: before a tool call, after a file edit, when the agent finishes.\nInstructions files are requests. Hooks are enforced. “Never edit .env” in CLAUDE.md can be ignored; a hook that blocks the edit cannot.\nExamples: run the formatter after each edit, block git commit unless the tests passed.\n\nBlock at commit rather than at each write. Blocking mid-task can confuse the agent.\n\nIn Claude Code, hooks live in .claude/settings.json and /hooks lists them. The agent can write them for you.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Extending</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html#model-context-protocol-mcp",
+    "href": "chapters/04-extending.html#model-context-protocol-mcp",
+    "title": "4  Extending",
+    "section": "4.4 Model Context Protocol (MCP)",
+    "text": "4.4 Model Context Protocol (MCP)\n\nAn MCP server connects the agent to an external service (issue tracker, database, browser) by giving it new tools.\nAdd one with claude mcp add or codex mcp add.\nEach server costs context. If a command-line tool already exists (gh, aws, psql), the agent can use it with no setup. Add a server only when it removes a manual step, e.g. copying data out of a browser tab.\nVendors do not audit third-party servers. Install only ones you trust.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Extending</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-extending.html#which-one-to-use",
+    "href": "chapters/04-extending.html#which-one-to-use",
+    "title": "4  Extending",
+    "section": "4.5 Which one to use",
+    "text": "4.5 Which one to use\n\n\n\n\n\n\n\nSituation\nMechanism\n\n\n\n\nYou corrected the same thing twice\nInstructions file\n\n\nYou retype the same prompt\nSkill\n\n\nA side task floods the conversation\nSubagent\n\n\nSomething must happen every time\nHook\n\n\nThe agent needs data from an external service\nCLI tool, else MCP server\n\n\nA second project needs the same setup\nPlugin (a bundle of the above)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Extending</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-security.html",
+    "href": "chapters/05-security.html",
+    "title": "5  Permissions and security",
+    "section": "",
+    "text": "5.1 Sandboxing\nAn agent runs commands as you, with your files and credentials. Two controls limit it: a sandbox restricts what it can touch, and approvals decide when it must ask first.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Permissions and security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-security.html#sandboxing",
+    "href": "chapters/05-security.html#sandboxing",
+    "title": "5  Permissions and security",
+    "section": "",
+    "text": "A sandbox is an operating-system restriction on file writes and network access. It applies to every command the agent runs, including scripts it wrote.\nCodex sandboxes by default: writes are limited to the project folder and the network is off. In Claude Code, /sandbox turns it on.\nBoth halves matter. Without network limits, an agent can send out your SSH keys. Without file limits, it can change things outside the project.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Permissions and security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-security.html#approval-modes",
+    "href": "chapters/05-security.html#approval-modes",
+    "title": "5  Permissions and security",
+    "section": "5.2 Approval modes",
+    "text": "5.2 Approval modes\n\n\n\n\n\n\n\n\n\nClaude Code\nCodex\n\n\n\n\nRead only\nplan mode\n--sandbox read-only\n\n\nDefault\nauto: acts, with a background safety check\nworkspace-write sandbox, asks to leave it\n\n\nNo checks\n--dangerously-skip-permissions\n--yolo\n\n\n\n\nAllowlist commands you approve repeatedly (/permissions in Claude Code). After many prompts in a row you stop reading them.\nA boundary stated in chat (“don’t push”) can be lost when the session compacts. For a guarantee, use a deny rule or a hook.\nUse the no-checks modes only inside a container or VM that holds no credentials. A July 2026 Codex bug could delete the home directory in that mode.\nCommit before starting a task. Git is the undo button.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Permissions and security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-security.html#prompt-injection",
+    "href": "chapters/05-security.html#prompt-injection",
+    "title": "5  Permissions and security",
+    "section": "5.3 Prompt injection",
+    "text": "5.3 Prompt injection\n\nAnything the agent reads can contain instructions: web pages, issues, files from other people, MCP tool output. The agent may follow them.\nThe risk grows with each permission. An agent with no network access cannot send data anywhere.\nKeep credentials out of reach. Don’t paste API keys into the chat, and don’t run agents in a shell with production credentials loaded.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Permissions and security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-security.html#unattended-runs",
+    "href": "chapters/05-security.html#unattended-runs",
+    "title": "5  Permissions and security",
+    "section": "5.4 Unattended runs",
+    "text": "5.4 Unattended runs\n\nAn unattended agent cannot ask for approval, so its permissions are the only limit. Grant the minimum: codex exec is read-only by default; claude -p takes --allowedTools.\nIn CI, the repository’s own configuration is input. claude -p runs a repository’s hooks and MCP servers without a trust prompt unless you pass --bare.\nPass API keys to the single command that needs them, not to the whole job.\nHave the agent open a pull request. Do not let it merge or deploy.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Permissions and security</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html",
+    "href": "chapters/06-failure-modes.html",
+    "title": "6  Failure modes",
+    "section": "",
+    "text": "6.1 Unverified success\nAgents fail in recurring ways. Most reports are anecdotes tied to one model version, so treat the list as things to watch for, not as measured rates.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#unverified-success",
+    "href": "chapters/06-failure-modes.html#unverified-success",
+    "title": "6  Failure modes",
+    "section": "",
+    "text": "The agent reports that the work is done and correct when it is not.\nSigns: placeholder implementations, hardcoded values, and tests that were disabled, deleted, or rewritten to pass.\nRead the diff of the tests, not only the code. Tell the agent to report a test it thinks is wrong rather than change it.\nSee Verify.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#scope-creep",
+    "href": "chapters/06-failure-modes.html#scope-creep",
+    "title": "6  Failure modes",
+    "section": "6.2 Scope creep",
+    "text": "6.2 Scope creep\n\nThe agent adds things you did not ask for: extra features, abstractions for one-time use, defensive checks, comments on untouched code.\nEach addition is plausible on its own. Together they make the diff hard to review.\nAdd a rule to the instructions file: “Only make changes that are directly requested or clearly necessary.”",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#assumptions",
+    "href": "chapters/06-failure-modes.html#assumptions",
+    "title": "6  Failure modes",
+    "section": "6.3 Assumptions",
+    "text": "6.3 Assumptions\n\nA vague prompt gets filled in with guesses, sometimes large ones, and the agent does not always say so.\nState what is out of scope, and ask the agent to list its assumptions before it starts.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#repeated-corrections",
+    "href": "chapters/06-failure-modes.html#repeated-corrections",
+    "title": "6  Failure modes",
+    "section": "6.4 Repeated corrections",
+    "text": "6.4 Repeated corrections\n\nCorrecting the same mistake over and over in chat fills the context with failed attempts.\nAfter the second correction, /clear and rewrite the prompt. If the mistake recurs across sessions, add a rule to the instructions file or a check the agent can run.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#generated-code-debt",
+    "href": "chapters/06-failure-modes.html#generated-code-debt",
+    "title": "6  Failure modes",
+    "section": "6.5 Generated-code debt",
+    "text": "6.5 Generated-code debt\n\nFor code, keep your “AI slop” separate from anything curated or hand-written. You can quickly rack up a lot of “technical debt”.\n\nI like having project/src/experimental/ for Claude-generated stuff that I move into project/src/some_file.py .\nUnderstanding the logic an agent implemented is almost always worthwhile.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#fabricated-references",
+    "href": "chapters/06-failure-modes.html#fabricated-references",
+    "title": "6  Failure modes",
+    "section": "6.6 Fabricated references",
+    "text": "6.6 Fabricated references\nSee Validating references.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#over-long-sessions",
+    "href": "chapters/06-failure-modes.html#over-long-sessions",
+    "title": "6  Failure modes",
+    "section": "6.7 Over-long sessions",
+    "text": "6.7 Over-long sessions\n\nA session that covers several unrelated tasks carries all of them in context. See Sessions.\nLong unsupervised runs drift. One report describes a 35-hour run that produced nothing usable. Set a time limit and check intermediate output.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-failure-modes.html#what-doesnt-work-well",
+    "href": "chapters/06-failure-modes.html#what-doesnt-work-well",
+    "title": "6  Failure modes",
+    "section": "6.8 What doesn’t work well",
+    "text": "6.8 What doesn’t work well\n\nWork you cannot verify. If there is no test, build, or reference result to check against, you are relying on the agent’s own claim.\nVague objectives such as “improve performance” or “clean this up”.\nSecurity-sensitive and performance-critical code. The output looks as confident as any other and still needs expert review.\nVisual checks. Agents miss obvious layout and plotting bugs even when they look at a screenshot.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Failure modes</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-rp1-practices.html",
+    "href": "chapters/07-rp1-practices.html",
+    "title": "7  Rallypoint One (RP1) practices",
+    "section": "",
+    "text": "7.1 Maintaining documentation\nRP1 has primarily used Anthropic’s Claude Code over the last year, but its becoming apparent that OpenAI’s Codex is catching up in capability.\nRP1 uses an in-house developed /autodocs skill for writing documentation on packages.\nClaude is good at keeping documentation in sync with code. The task is well-scoped (read the code, update the prose to match), the result is a reviewable diff, and mistakes are low cost. It also writes documentation aimed at agents rather than people: condensed package and interface summaries that a later session reads instead of the package source.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Rallypoint One (RP1) practices</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-rp1-practices.html#research-book-primers",
+    "href": "chapters/07-rp1-practices.html#research-book-primers",
+    "title": "7  Rallypoint One (RP1) practices",
+    "section": "7.2 Research-book primers",
+    "text": "7.2 Research-book primers\nClaude can draft a survey book on a subject (one Quarto book per topic, with chapters, a shared bibliography, and a section index) in a few sessions. I use these as background: an agent greps the index for the relevant section and reads only that section before planning a task in that domain. Example: RP1Knowledge.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Rallypoint One (RP1) practices</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-rp1-practices.html#validating-references",
+    "href": "chapters/07-rp1-practices.html#validating-references",
+    "title": "7  Rallypoint One (RP1) practices",
+    "section": "7.3 Validating references",
+    "text": "7.3 Validating references\nGenerated bibliographies contain fabricated works and drifted metadata (wrong authors, year, venue, or DOI), and a fabricated reference looks the same as a real one. A skill that validates references is necessary for any generated document with citations. Mine runs two passes:\n\nStructural: missing fields, duplicate keys, malformed DOIs/URLs, cited-but-undefined and defined-but-uncited entries.\nFactual: looks up each work and checks that its authors, title, year, venue, and DOI match a real record.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Rallypoint One (RP1) practices</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-rp1-practices.html#a-second-brain",
+    "href": "chapters/07-rp1-practices.html#a-second-brain",
+    "title": "7  Rallypoint One (RP1) practices",
+    "section": "7.4 A second brain",
+    "text": "7.4 A second brain\nA git repository of plain markdown pages gives the agent context that spans projects and sessions:\n\nOne page per entity: projects, people, organizations, concepts, documents.\nAn index.md for navigation and a README.md dashboard for current status.\nA CLAUDE.md in the repository that defines the page schema and editing rules.\nA pointer in the global instructions file saying what the repository contains and when to consult it, and that it is read-only from other projects.\n\n# Knowledge vault\n- `~/path/to/vault` holds pages on projects, people, and concepts.\n  Start from `index.md`; navigate with grep.\n- Read-only from other projects. Edit it only from within the vault, following its CLAUDE.md.\nPlain markdown needs no database or embedding index: the agent navigates with grep, and every change is a diff.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Rallypoint One (RP1) practices</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/A-tool-reference.html",
+    "href": "chapters/A-tool-reference.html",
+    "title": "Appendix A — Tool reference",
+    "section": "",
+    "text": "A.1 Claude Code and Codex feature map\nDetails that change often. Checked against vendor documentation on 2026-09-30 unless noted.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Tool reference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/A-tool-reference.html#claude-code-and-codex-feature-map",
+    "href": "chapters/A-tool-reference.html#claude-code-and-codex-feature-map",
+    "title": "Appendix A — Tool reference",
+    "section": "",
+    "text": "Claude Code\nCodex\n\n\n\n\nInstructions file\nCLAUDE.md (reads AGENTS.md if there is no CLAUDE.md)\nAGENTS.md\n\n\nSettings\n.claude/settings.json\n.codex/config.toml\n\n\nSkills folder\n.claude/skills/&lt;name&gt;/SKILL.md\n.agents/skills/&lt;name&gt;/SKILL.md\n\n\nInvoke a skill\n/name\n$name\n\n\nPlan without editing\n/plan, Shift+Tab\n/plan, Shift+Tab\n\n\nWork until a condition holds\n/goal\n/goal\n\n\nReview the diff\n/code-review\n/review\n\n\nRun one prompt, no session\nclaude -p \"...\"\ncodex exec \"...\"\n\n\nAdd an MCP server\nclaude mcp add\ncodex mcp add\n\n\nSandbox\n/sandbox (off by default)\nOn by default; --sandbox &lt;mode&gt;\n\n\nSkip all checks\n--dangerously-skip-permissions\n--yolo\n\n\nGitHub Action\nanthropics/claude-code-action\nopenai/codex-action",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Tool reference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/A-tool-reference.html#model-and-cost-selection",
+    "href": "chapters/A-tool-reference.html#model-and-cost-selection",
+    "title": "Appendix A — Tool reference",
+    "section": "A.2 Model and cost selection",
+    "text": "A.2 Model and cost selection\n\n\n\n\nMost capable\nMiddle\nCheapest\n\n\n\n\nClaude Code (November 2026)\nFable\nOpus, Sonnet\nHaiku\n\n\nCodex\ngpt-6-astra\ngpt-6.1-sol\ngpt-6-luna\n\n\n\n\nBoth tools have a reasoning effort setting (/effort in Claude Code, model_reasoning_effort in Codex). Higher effort is slower and uses more of your quota.\nA common split: a capable model at high effort for planning and review, a cheaper model or lower effort for routine implementation.\nContext is a cost. MCP servers, long instructions files, and long sessions are all billed on every request.\nResuming a session that has been idle for over an hour can re-bill the whole context. Start a new session instead.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Tool reference</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/A-tool-reference.html#superseded-guidance",
+    "href": "chapters/A-tool-reference.html#superseded-guidance",
+    "title": "Appendix A — Tool reference",
+    "section": "A.3 Superseded guidance",
+    "text": "A.3 Superseded guidance\nAdvice in older posts that no longer applies.\n\n\n\n\n\n\n\nOld advice\nCurrent status\n\n\n\n\n“think”, “think hard”, “think harder” keywords (Claude)\nOnly ultrathink is recognized. Use /effort.\n\n\nAll-caps “CRITICAL” / “YOU MUST” instructions\nDiscouraged; current models over-apply them\n\n\n.claude/commands/ custom commands\nMerged into skills; still works\n\n\nRoutine --dangerously-skip-permissions in a container (Claude)\nAuto mode is the default; bypass is for isolated environments only\n\n\nSymlink AGENTS.md to CLAUDE.md\nClaude Code reads AGENTS.md when there is no CLAUDE.md\n\n\ncodex --full-auto\nDeprecated; use --sandbox workspace-write\n\n\nGPT-5.x model names and prompting guides (Codex)\nModels retired; current names are in the table above",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Tool reference</span>"
     ]
   }
 ]

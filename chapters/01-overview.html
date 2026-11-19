@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,6 +30,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../chapters/02-context.html" rel="next">
 <link href="../index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -75,7 +41,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f21512b9f1ca0b8275bba69a10bfcda6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-e33616daf01461bd4322cfeac3b3e99e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -156,6 +122,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-context.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Context</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-workflows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Workflows</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-extending.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Extending</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Permissions and security</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-failure-modes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Failure modes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-rp1-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Rallypoint One (RP1) practices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/A-tool-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tool reference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -168,17 +187,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#the-tools" id="toc-the-tools" class="nav-link active" data-scroll-target="#the-tools"><span class="header-section-number">1.1</span> The Tools</a></li>
   <li><a href="#categories" id="toc-categories" class="nav-link" data-scroll-target="#categories"><span class="header-section-number">1.2</span> Categories</a></li>
-  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context"><span class="header-section-number">2</span> Context</a>
-  <ul class="collapse">
-  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions"><span class="header-section-number">2.1</span> Instructions</a></li>
-  <li><a href="#skills" id="toc-skills" class="nav-link" data-scroll-target="#skills"><span class="header-section-number">2.2</span> Skills</a></li>
-  <li><a href="#sessions" id="toc-sessions" class="nav-link" data-scroll-target="#sessions"><span class="header-section-number">2.3</span> Sessions</a>
-  <ul class="collapse">
-  <li><a href="#subagents" id="toc-subagents" class="nav-link" data-scroll-target="#subagents"><span class="header-section-number">2.3.1</span> Subagents</a></li>
-  </ul></li>
-  <li><a href="#hooks" id="toc-hooks" class="nav-link" data-scroll-target="#hooks"><span class="header-section-number">2.4</span> Hooks</a></li>
-  <li><a href="#model-context-protocol-mcp" id="toc-model-context-protocol-mcp" class="nav-link" data-scroll-target="#model-context-protocol-mcp"><span class="header-section-number">2.5</span> Model Context Protocol (MCP)</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/Agentic-Coding-Best-Practices/edit/main/chapters/01-overview.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/Agentic-Coding-Best-Practices/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -208,6 +216,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-tools" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="the-tools"><span class="header-section-number">1.1</span> The Tools</h2>
 <p>A coding agent is a language model in a loop with tools: it reads files, runs shell commands, edits code, and checks the results, repeating until the task is done or it needs input.</p>
+<ul>
+<li>The loop:
+<ol type="1">
+<li>User provides instructions (i.e.&nbsp;a <em>prompt</em>).</li>
+<li>Agent uses tools to complete the task, answer the question, etc. from the prompt.</li>
+</ol></li>
+</ul>
 </section>
 <section id="categories" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="categories"><span class="header-section-number">1.2</span> Categories</h2>
@@ -262,60 +277,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-</section>
-<section id="context" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Context</h1>
-<p>An agent knows only what is in its <em>context window</em>: the system prompt, instructions files, the conversation, and tool output. The window is finite, and models use long contexts less reliably than short ones (<a href="https://arxiv.org/abs/2307.03172">Liu et al., 2024</a>).</p>
-<section id="instructions" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="instructions"><span class="header-section-number">2.1</span> Instructions</h2>
-<p>Each tool loads a markdown file at session start (<code>CLAUDE.md</code>, <code>AGENTS.md</code>, etc.). Try to keep this short. Include non-obvious notes, build/test commands, what not to touch, etc.</p>
-<ul>
-<li><code>AGENTS.md</code> (or equivalent) files can give per-directory instructions. The instructions inside the directory an agent is working in is supposed to take priority over instructions from higher-level directories.</li>
-<li>Adding a “Gotchas” section is often helpful:</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Gotchas</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not add docstrings, comments, or type annotations to code that wasn't changed.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="skills" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="skills"><span class="header-section-number">2.2</span> Skills</h2>
-<ul>
-<li>Skills are re-usable prompts. Rather than retyping detailed instructions to perform some repeated task, you can invoke skills with slash commands.</li>
-<li>E.g. <code>/clear</code> wipes the context from the session.</li>
-<li><strong>Claude is good at writing its own skills</strong>. Examples:
-<ul>
-<li>“create a <code>/wildfire-news</code> skill to find the top wildfire-related news stories in the last few days. The user should be able to specify the region of interest and number of days. Create an HTML report with links to the original articles.” Afterwards try <code>/wildfire-news Denver 7 days</code>.</li>
-<li>“create a <code>/primer</code> skill to research a subject and get me up to speed on it.” Then: <code>Give me a /primer on the state of the art of wildfire propagation modeling</code>.</li>
-</ul></li>
-</ul>
-</section>
-<section id="sessions" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sessions"><span class="header-section-number">2.3</span> Sessions</h2>
-<ul>
-<li>Be goal/task oriented. Long-running conversations can cause agents to pull information from unrelated tasks.</li>
-<li>Claude and codex will run a <code>/compact</code> skill if you hit the context limit. This is usually a sign you’re trying to do too much within a single session.</li>
-<li><strong>Goals/tasks can be complex</strong>. You can start a session with “help me break down this task into manageable pieces.”
-<ul>
-<li>Both Claude and Codex have a <code>/plan</code> skill that can research how to approach a task. I like instructing Claude to save them in a human-reviewable place, e.g.&nbsp;<code>plans/code-refactor.md</code></li>
-</ul></li>
-</ul>
-<section id="subagents" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="subagents"><span class="header-section-number">2.3.1</span> Subagents</h3>
-<ul>
-<li>Claude and Codex can spawn subagents to “work for” the one you’re having a session with. They will do this themselves or you can specifically instruct them to do so.
-<ul>
-<li>“Analyze the approach of my fire model. Spawn agents to compare and contrast my model with state-of-the-art open source wildfire modeling projects.”</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="hooks" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="hooks"><span class="header-section-number">2.4</span> Hooks</h2>
-</section>
-<section id="model-context-protocol-mcp" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="model-context-protocol-mcp"><span class="header-section-number">2.5</span> Model Context Protocol (MCP)</h2>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -730,6 +693,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../chapters/02-context.html" class="pagination-link" aria-label="Context">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Context</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
